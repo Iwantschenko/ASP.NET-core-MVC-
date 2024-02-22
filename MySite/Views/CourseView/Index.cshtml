@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MySite.Models.Course>;
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Course_ID</td>
+                        <td>@item.Course_Name</td>
+                        <td>@item.Course_Description</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Course_ID })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Course_ID })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Course_ID })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</div>
