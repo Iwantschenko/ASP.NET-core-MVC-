@@ -12,7 +12,7 @@ namespace MySite.Models
         public Guid TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
         
-        public List<Student> Students { get; set; }
+        public List<Student>? Students { get; set; }
 
     }
 }

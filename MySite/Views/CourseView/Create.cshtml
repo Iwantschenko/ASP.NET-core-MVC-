@@ -1,9 +1,9 @@
 ﻿@model MySite.Models.Course
 
-@using (Html.BeginForm("Edit", "CourseView", FormMethod.Post))
+@using (Html.BeginForm("Create", "CourseView", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.Course_ID)
@@ -23,5 +23,6 @@
         @Html.ValidationMessageFor(model => model.Course_Description)
     </div>
 
-    <input type="submit" class="btn btn-primary"/>
+    <input type="submit" class="btn btn-primary" />
 }
+

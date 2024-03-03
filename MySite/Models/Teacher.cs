@@ -9,7 +9,7 @@ namespace MySite.Models
         public string Teacher_Name { get; set; }
         public string Teacher_Surname { get; set; }
 
-        public List<Group> Groups { get; set; }
+        public List<Group>? Groups { get; set; }
 
 
     }
