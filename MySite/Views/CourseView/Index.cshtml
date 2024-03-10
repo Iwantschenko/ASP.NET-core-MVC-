@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
 <h1>Course List </h1>
 <button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Create","CourseView")'"> Create new </button>
 <div>
@@ -23,12 +28,12 @@
                 {
                     <tr>
                         <td>@item.Course_ID</td>
-                        <td>@item.Course_Name</td>
+                        <td >@item.Course_Name</td>
                         <td>@item.Course_Description</td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.Course_ID }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.Course_ID},new { onclick = "return confirm('Are you sure?');" }) |
-                            @Html.ActionLink("Groups", "Edit", new { id = item.Course_ID })
+                            @Html.ActionLink("Groups" ,"CourseDetails","GroupView" , new{ id = item.Course_ID})
                         </td>
                     </tr>
                 }

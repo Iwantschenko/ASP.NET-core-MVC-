@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MySite.Models.Teacher>;
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Teacher List </h1>
+<button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Create","TeachersView" , new {id = Guid.NewGuid()})'"> Create new </button>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Teacher_Id</td>
+                        <td>@item.Teacher_Name</td>
+                        <td>@item.Teacher_Surname</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Teacher_Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Teacher_Id }, new { onclick = "return confirm('Are you sure?');" })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</div>

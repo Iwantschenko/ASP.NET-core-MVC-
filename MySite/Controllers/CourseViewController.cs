@@ -14,7 +14,7 @@ namespace MySite.Controllers
             _courseService = service;
         }
 
-        [HttpGet]
+        
         public IActionResult Index()
         {
             var list = _courseService.GetAll().ToList();
@@ -29,24 +29,6 @@ namespace MySite.Controllers
             var find = _courseService.GetId(id);
             return View(find);
         }
-
-        [HttpPost]
-        public IActionResult Edit(Course model)
-        {
-            if (ModelState.IsValid)
-            {
-                _courseService.Update(model);
-                _courseService.SaveChanges();
-                
-
-                return RedirectToAction("Index", new { id = model.Course_ID });
-            }
-            else 
-            { 
-                return View(model); 
-            }
-            
-        }
         [HttpGet]
         public IActionResult Create()
         {
@@ -56,22 +38,37 @@ namespace MySite.Controllers
                 Course_Name = string.Empty,
                 Course_Description = string.Empty,
             };
-            return View(course);
+            return View("Edit", course);
         }
         [HttpPost]
-        public IActionResult Create(Course model)
+        public IActionResult ResultEdition(Course course)
         {
             if (ModelState.IsValid)
             {
-                _courseService.Add(model);
+                var item = _courseService.GetId(course.Course_ID);
+                if (item != null )
+                {
+                    item.Course_Name = course.Course_Name;
+                    item.Course_Description = course.Course_Description;
+                    _courseService.Update(item);
+                }
+                else
+                    _courseService.Add(course);
+               
+
                 _courseService.SaveChanges();
-                return RedirectToAction("Index");
+                
+
+                return RedirectToAction("Index", new { id = course.Course_ID });
             }
             else 
-            {
-                return View(model); 
+            { 
+                return View("Edit" ,course); 
             }
+            
         }
+       
+        
         
         public IActionResult Delete(Guid id) 
         {

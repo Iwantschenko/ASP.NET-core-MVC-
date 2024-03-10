@@ -35,7 +35,6 @@ namespace MySite.Infrastructure
         public void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-
         }
 
         public List<T> GetAll()
@@ -43,10 +42,7 @@ namespace MySite.Infrastructure
             return _context.Set<T>().ToList();
         }
 
-        public T GetId(Guid id)
-        {
-            return _context.Set<T>().Find(id);
-        }
+        public T GetId(Guid id) => _context.Set<T>().Find(id);
 
         public void Save()
         {
