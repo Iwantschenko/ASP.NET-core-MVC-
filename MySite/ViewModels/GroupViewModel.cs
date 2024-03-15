@@ -1,15 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace MySite.ViewModels
 {
     public class GroupViewModel
     {
-        [Required(ErrorMessage = "Select Name")]
+        public MySite.Models.Group group { get; set; }
+        
+        public List<SelectListItem> courseSelectList {  get; set; }
 
-        public Models.Group Group { get; set; }
-        [Required(ErrorMessage = "Select Name")]
-        public List<CourseShortModel> Courses { get; set; }
-        [Required(ErrorMessage = "Select Name")]
-        public List<TeacherShortModel> Teachers { get; set; }
+        public List<SelectListItem> teacherSelectList { get; set; }
     }
 }

@@ -39,7 +39,15 @@ namespace MySite.Infrastructure
 
         public List<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            var list =  _context.Set<T>().ToList();
+            if (list != null)
+            {
+                return list;
+            }
+            else 
+            {
+                return new List<T>(); 
+            }
         }
 
         public T GetId(Guid id) => _context.Set<T>().Find(id);

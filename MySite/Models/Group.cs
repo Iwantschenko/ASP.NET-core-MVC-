@@ -6,7 +6,7 @@ namespace MySite.Models
     {
         [Key]
         public Guid Group_Id { get; set; }
-        [Required(ErrorMessage = "Enter Name")]
+        [Required(ErrorMessage = "Enter Name is invalid")]
         public string Group_Name { get; set; }
         [Required(ErrorMessage = "Select Course")]
         public Guid CourseId { get; set; }
