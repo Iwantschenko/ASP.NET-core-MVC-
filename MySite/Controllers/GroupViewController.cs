@@ -51,7 +51,19 @@ namespace MySite.Controllers
                 Courses = _courseService.GetAll(),
                 Teachers = _teacherService.GetAll(),
             };
+            
             return View(groupsViewModel);
+        }
+        public IActionResult CourseDetails(Guid idFindCourse)
+        {
+            AllGroupsInfo groupsViewModel = new AllGroupsInfo()
+            {
+                Groups = _groupService.GetAll().Where(x=> x.CourseId == idFindCourse).ToList(),
+                Courses = _courseService.GetAll(),
+                Teachers = _teacherService.GetAll(),
+            };
+
+            return View("Index",groupsViewModel);
         }
         public IActionResult Edit(Guid id)
         {
@@ -76,20 +88,25 @@ namespace MySite.Controllers
         [HttpPost]
         public IActionResult ResultEdition(GroupViewModel groupModel)
         {
-            var group = groupModel.group;
+            
             if (ModelState.IsValid )
             {
-                if (_groupService.GetId(group.Group_Id) != null)
+                var group = _groupService.GetId(groupModel.group.Group_Id);
+                if (group != null)
                 {
+                    group.Group_Name = groupModel.group.Group_Name;
+                    group.CourseId = groupModel.group.CourseId;
+                    group.TeacherId = groupModel.group.TeacherId;
+
                     _groupService.Update(group);
                 }
                 else
-                    _groupService.Add(group);
+                    _groupService.Add(groupModel.group);
                 _groupService.SaveChanges();
                 return RedirectToAction("Index");
             }
             else
-                return View("Edition", GetGroupViewModel(group));
+                return View("Edition", GetGroupViewModel(groupModel.group));
 
         }
 

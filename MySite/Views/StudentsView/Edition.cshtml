@@ -1,0 +1,38 @@
+﻿@model MySite.ViewModels.StudentViewModel
+@{
+    ViewBag.Title = "Edition Students";
+}
+
+@using (Html.BeginForm("ResultEdition", "StudentsView", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.Student.Student_Id)
+        @Html.TextBoxFor(model => model.Student.Student_Id, new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(model => model.Student.Student_Id, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Student.First_Name)
+        @Html.TextBoxFor(model => model.Student.First_Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Student.First_Name, "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Student.Last_Name)
+        @Html.TextBoxFor(model => model.Student.Last_Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Student.Last_Name, "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Student.GroupId, "Select Teacher ")
+        @Html.DropDownListFor(Model => Model.Student.GroupId, Model.Groups, "----- Select Teacher -----", new { @class = "form-control" })
+        @Html.ValidationMessageFor(Model => Model.Student.GroupId, "", new { @class = "text-danger" })
+    </div>
+
+
+    @Html.HiddenFor(model => model.Groups)
+    
+    <input type="submit" class="btn btn-primary" />
+}

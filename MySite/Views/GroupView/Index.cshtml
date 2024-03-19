@@ -2,7 +2,10 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Course> courses = ViewBag.Courses;
+    List<Teacher> teachers = ViewBag.Teachers;
 }
+
 <h1>Group data</h1>
 <button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Create","GroupView")'"> Create new </button>
 <div>
@@ -25,9 +28,9 @@
                         <td>@Model.Courses.FirstOrDefault(x => x.Course_ID == item.CourseId).Course_Name</td>
                         <td>@Model.Teachers.FirstOrDefault(x => x.Teacher_Id == item.TeacherId).Teacher_Surname</td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { onclick = "return confirm('Are you sure?');" }) |
-                            @Html.ActionLink("Groups", "CourseDetails", "GroupView", new { id = item.CourseId })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Group_Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Group_Id }, new { onclick = "return confirm('Are you sure?');" }) |
+                            @Html.ActionLink("Students", "GroupDetails", "StudentsView", new { findGroupID = item.Group_Id })
                         </td>
                     </tr>
                 }
