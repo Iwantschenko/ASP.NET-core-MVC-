@@ -1,0 +1,41 @@
+﻿@model             AllStudentInfo;
+@{
+    ViewBag.Title = "Students List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Students List </h1>
+<button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Create","StudentsView", new {id = Guid.NewGuid()})'"> Create new </button>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Group</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.Students)
+                {
+                    <tr>
+                        <td>@item.Student_Id</td>
+                        <td>@item.First_Name</td>
+                        <td>@item.Last_Name</td>
+                        <td>@Model.Groups.FirstOrDefault(x => x.Group_Id == item.GroupId).Group_Name</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Student_Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Student_Id }, new { onclick = "return confirm('Are you sure?');" }) 
+                            
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</div>
