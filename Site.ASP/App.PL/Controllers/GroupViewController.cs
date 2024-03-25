@@ -1,9 +1,9 @@
-﻿using App.PL.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.DAL.Models;
 using App.BLL;
 using System.Diagnostics;
+using App.PL.Models;
 
 namespace App.PL.Controllers
 {
@@ -35,13 +35,18 @@ namespace App.PL.Controllers
             {
                 teacherSelectList.Add(new SelectListItem() { Text = teacher.Teacher_Name + " " + teacher.Teacher_Surname, Value = teacher.Teacher_Id.ToString() });
             }
+            
             return new GroupViewModel()
             {
-                group = group,
+                Group_Id = group.Group_Id,
+                Group_Name = group.Group_Name,
+                CourseId = group.CourseId, 
+                TeacherId = group.TeacherId,
                 courseSelectList = courseSelectList,
                 teacherSelectList = teacherSelectList
             };
         }
+        
         public IActionResult Index()
         {
             AllGroupsInfo groupsViewModel = new AllGroupsInfo()
@@ -90,22 +95,39 @@ namespace App.PL.Controllers
 
             if (ModelState.IsValid)
             {
-                var group = _groupService.GetId(groupModel.group.Group_Id);
-                if (group != null)
+                var findGroup = _groupService.GetId(groupModel.Group_Id);
+                if (findGroup != null)
                 {
-                    group.Group_Name = groupModel.group.Group_Name;
-                    group.CourseId = groupModel.group.CourseId;
-                    group.TeacherId = groupModel.group.TeacherId;
+                    findGroup.Group_Name = groupModel.Group_Name;
+                    findGroup.CourseId = groupModel.CourseId;
+                    findGroup.TeacherId = groupModel.TeacherId;
 
-                    _groupService.Update(group);
+                    _groupService.Update(findGroup);
                 }
                 else
-                    _groupService.Add(groupModel.group);
+                {
+                    _groupService.Add(new Group()
+                    {
+                        Group_Id = groupModel.Group_Id,
+                        Group_Name = groupModel.Group_Name,
+                        CourseId = groupModel.CourseId,
+                        TeacherId = groupModel.TeacherId
+
+                    });
+                }
+                    
                 _groupService.SaveChanges();
                 return RedirectToAction("Index");
             }
             else
-                return View("Edition", GetGroupViewModel(groupModel.group));
+                return View("Edition", GetGroupViewModel(new Group()
+                {
+                    Group_Id = groupModel.Group_Id,
+                    Group_Name = groupModel.Group_Name,
+                    CourseId = groupModel.CourseId,
+                    TeacherId = groupModel.TeacherId
+
+                }));
 
         }
 

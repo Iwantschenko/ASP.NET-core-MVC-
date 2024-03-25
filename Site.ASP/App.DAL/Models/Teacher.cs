@@ -6,9 +6,9 @@ namespace App.DAL.Models
     {
         [Key]
         public Guid Teacher_Id { get; set; }
-        [Required(ErrorMessage = "Enter Name")]
+        [Required(ErrorMessage = "Select Name")]
         public string Teacher_Name { get; set; }
-        [Required(ErrorMessage = "Enter Surname")]
+        [Required(ErrorMessage = "Select surname")]
         public string Teacher_Surname { get; set; }
 
         public List<Group>? Groups { get; set; }

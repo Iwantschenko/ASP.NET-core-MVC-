@@ -14,31 +14,31 @@ namespace App.PL.Controllers
             _courseService = service;
         }
 
-
+        
         public IActionResult Index()
         {
             var list = _courseService.GetAll().ToList();
             ViewBag.List = list;
             ViewData["Courses"] = list;
             return View(list);
-
         }
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
             var find = _courseService.GetId(id);
+            
             return View(find);
         }
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(Guid id)
         {
             Course course = new Course()
             {
-                Course_ID = Guid.NewGuid(),
+                Course_ID = id,
                 Course_Name = string.Empty,
                 Course_Description = string.Empty,
             };
-            return View("Edit", course);
+            return View("Edit",course);
         }
         [HttpPost]
         public IActionResult ResultEdition(Course course)
@@ -53,9 +53,10 @@ namespace App.PL.Controllers
                     _courseService.Update(item);
                 }
                 else
+                {
                     _courseService.Add(course);
-
-
+                }
+                    
                 _courseService.SaveChanges();
 
 

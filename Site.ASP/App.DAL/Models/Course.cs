@@ -9,7 +9,7 @@ namespace App.DAL.Models
 
         [Required(ErrorMessage = "Select Name")]
         public string Course_Name { get; set; }
-        [Required(ErrorMessage = "Enter Description")]
+        [Required(ErrorMessage = "Select Info")]
         public string Course_Description { get; set; }
 
         public List<Group>? Groups { get; set; }

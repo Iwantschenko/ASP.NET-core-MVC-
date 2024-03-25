@@ -1,10 +1,10 @@
-﻿using App.PL.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using App.DAL.Models;
 using App.BLL;
 using System.Net;
+using App.PL.Models;
 
 namespace App.PL.Controllers
 {
@@ -17,16 +17,19 @@ namespace App.PL.Controllers
             _studentService = studentService;
             _groupService = groupService;
         }
-        private StudentViewModel GetStudentViewModel(Student student)
+        private StudentsViewModel GetStudentViewModel(Student student)
         {
             var selectListGroups = new List<SelectListItem>();
             foreach (var group in _groupService.GetAll())
             {
                 selectListGroups.Add(new SelectListItem() { Text = group.Group_Name, Value = group.Group_Id.ToString() });
             }
-            return new StudentViewModel
+            return new StudentsViewModel
             {
-                Student = student,
+                Student_Id = student.Student_Id,
+                First_Name = student.First_Name,
+                Last_Name = student.Last_Name,
+                GroupId = student.GroupId,
                 Groups = selectListGroups
             };
         }
@@ -64,26 +67,41 @@ namespace App.PL.Controllers
         {
             return View(GetStudentViewModel(student));
         }
-        public IActionResult ResultEdition(StudentViewModel model)
+        public IActionResult ResultEdition(StudentsViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var student = _studentService.GetId(model.Student.Student_Id);
+                var student = _studentService.GetId(model.Student_Id);
                 if (student != null)
                 {
-                    student.First_Name = model.Student.First_Name;
-                    student.Last_Name = model.Student.Last_Name;
-                    student.GroupId = model.Student.GroupId;
+                    student.First_Name = model.First_Name;
+                    student.Last_Name = model.Last_Name;
+                    student.GroupId = model.GroupId;
 
                     _studentService.Update(student);
                 }
                 else
-                    _studentService.Add(model.Student);
+                {
+                    _studentService.Add(new Student
+                    {
+                        Student_Id=model.Student_Id,
+                        First_Name=model.First_Name,
+                        Last_Name=model.Last_Name,
+                        GroupId=model.GroupId
+                    });
+                }
+                    
                 _groupService.SaveChanges();
                 return RedirectToAction("Index");
             }
             else
-                return View("Edition", GetStudentViewModel(model.Student));
+                return View("Edition", GetStudentViewModel(new Student
+                {
+                    Student_Id = model.Student_Id,
+                    First_Name = model.First_Name,
+                    Last_Name = model.Last_Name,
+                    GroupId = model.GroupId
+                }));
 
         }
         public IActionResult Delete(Guid id)
