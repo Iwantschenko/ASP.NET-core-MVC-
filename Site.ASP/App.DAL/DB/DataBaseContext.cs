@@ -1,4 +1,4 @@
-﻿using App.DAL.Models;
+﻿using App.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 

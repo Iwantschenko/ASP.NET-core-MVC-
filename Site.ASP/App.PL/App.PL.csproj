@@ -7,16 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\App.BLL\App.BLL.csproj" />
-    <ProjectReference Include="..\App.DAL\App.DAL.csproj" />
+    <ProjectReference Include="..\App.Models\App.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="App.DAL">
+      <HintPath>..\App.DAL\bin\Debug\net8.0\App.DAL.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

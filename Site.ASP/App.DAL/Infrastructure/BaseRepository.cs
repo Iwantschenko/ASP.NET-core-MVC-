@@ -15,12 +15,10 @@ namespace App.DAL.Infrastructure
         {
             _context.Set<T>().Add(entity);
         }
-
         public void AddRange(IEnumerable<T> entity)
         {
             _context.Set<T>().AddRange(entity);
         }
-
         public void Delete(T entity)
         {
             var item = _context.Set<T>().Find(entity);

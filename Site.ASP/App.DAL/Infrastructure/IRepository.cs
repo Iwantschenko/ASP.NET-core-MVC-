@@ -10,5 +10,6 @@
         T GetId(Guid id);
         void Save();
         List<T> GetAll();
+
     }
 }

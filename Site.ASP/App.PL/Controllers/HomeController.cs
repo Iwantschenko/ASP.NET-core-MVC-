@@ -1,19 +1,21 @@
+﻿using App.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using App.DAL.Models;
 using App.BLL;
-using System.Diagnostics;
-
+using App.Models.Models;
 namespace App.PL.Controllers
 {
     public class HomeController : Controller
     {
-
-
-        [HttpGet]
-        public IActionResult Index()
+        private readonly ServiceRepository<Course, CourseModel> _courseService;
+        public HomeController(ServiceRepository<Course, CourseModel> service)
         {
-            return View();
+            _courseService = service;
         }
 
+        public IActionResult Index()
+        {
+            _courseService.GetAll();
+            return View();
+        }
     }
 }

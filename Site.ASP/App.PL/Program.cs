@@ -1,9 +1,14 @@
 using System.Text.RegularExpressions;
 using App.DAL.Infrastructure;
-using App.DAL.Models;
 using App.DAL.DB;
-using App.BLL;
 using Microsoft.EntityFrameworkCore;
+
+using App.BLL;
+using App.Models.Entities;
+using App.Models.Models;
+using App.BLL.Mapping;
+
+
 
 namespace App.PL
 {
@@ -17,17 +22,23 @@ namespace App.PL
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppSettingConnectionString"))
                 );
 
-            builder.Services.AddScoped<IRepository<Course>, BaseRepository<Course>>();
-            builder.Services.AddScoped<ServiceRepository<Course>>();
 
-            builder.Services.AddScoped<IRepository<DAL.Models.Group>, BaseRepository<DAL.Models.Group>>();
-            builder.Services.AddScoped<ServiceRepository<DAL.Models.Group>>();
+            builder.Services.AddScoped<IRepository<Course>, BaseRepository<Course>>();
+            builder.Services.AddScoped<ServiceRepository<Course , CourseModel>>();
+            builder.Services.AddScoped<IMapping<Course, CourseModel>,CourseMapping>();
+
+            builder.Services.AddScoped<IRepository<App.Models.Entities.Group>, BaseRepository<App.Models.Entities.Group>>();
+            builder.Services.AddScoped<ServiceRepository<App.Models.Entities.Group, GroupModel>>();
+            builder.Services.AddScoped<IMapping<App.Models.Entities.Group, GroupModel>, GroupMapping>();
 
             builder.Services.AddScoped<IRepository<Teacher>, BaseRepository<Teacher>>();
-            builder.Services.AddScoped<ServiceRepository<Teacher>>();
+            builder.Services.AddScoped<ServiceRepository<Teacher, TeacherModel>>();
+            builder.Services.AddScoped<IMapping<Teacher, TeacherModel>, TeacherMapping>();
 
             builder.Services.AddScoped<IRepository<Student>, BaseRepository<Student>>();
-            builder.Services.AddScoped<ServiceRepository<Student>>();
+            builder.Services.AddScoped<ServiceRepository<Student, TeacherModel>>();
+            builder.Services.AddScoped<IMapping<Student, StudentModel>, StudentMapping>();
+
 
 
             builder.Services.AddControllersWithViews();
