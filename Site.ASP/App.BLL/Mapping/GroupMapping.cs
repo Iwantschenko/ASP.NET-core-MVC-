@@ -10,6 +10,7 @@ namespace App.BLL.Mapping
 {
     public class GroupMapping : IMapping<Group, GroupModel>
     {
+        
         public override Group ToEntity(GroupModel model)
         {
             return new Group()
@@ -30,6 +31,14 @@ namespace App.BLL.Mapping
                 CourseId = entity.CourseId,
                 TeacherId = entity.TeacherId,
             };
+        }
+        public override Guid GetModelId(GroupModel model) => model.Group_Id;
+
+        public override void UpdateEntity(GroupModel model, Group entity)
+        {
+            entity.Group_Name = model.Group_Name;
+            entity.CourseId = model.CourseId;
+            entity.TeacherId = model.TeacherId;
         }
     }
 }

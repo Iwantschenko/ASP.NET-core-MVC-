@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.PL", "App.PL\App.PL.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.BLL", "App.BLL\App.BLL.csproj", "{A571CE38-C818-4F2B-B304-F3BBA3C8CCE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Models", "App.Models\App.Models.csproj", "{95C9C65C-0045-4016-B093-B4E5FF7A9DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Models", "App.Models\App.Models.csproj", "{95C9C65C-0045-4016-B093-B4E5FF7A9DB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

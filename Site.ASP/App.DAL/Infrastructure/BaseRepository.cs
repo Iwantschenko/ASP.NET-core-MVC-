@@ -50,12 +50,13 @@ namespace App.DAL.Infrastructure
         }
 
         public T GetId(Guid id) => _context.Set<T>().Find(id);
+       
 
         public void Save()
         {
             _context.SaveChanges();
         }
 
-
+        
     }
 }

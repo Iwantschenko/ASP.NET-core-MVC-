@@ -25,7 +25,12 @@ namespace App.BLL
         public void AddRange(List<TModel> collection) => _repository.AddRange(_mapping.ToListEntity(collection));
         public void Delete(TModel model) => _repository.Delete(_mapping.ToEntity(model));
         public void RemoveEntity(TModel model) => _repository.RemoveEntity(_mapping.ToEntity(model));
-        public void Update(TModel model) => _repository.Update(_mapping.ToEntity(model));
+        public void Update(TModel model)
+        {
+            var entity = _repository.GetId(_mapping.GetModelId(model));
+            _mapping.UpdateEntity(model ,entity);
+             _repository.Update(entity);
+        }  
         public List<TModel> GetAll() => _mapping.ToListModel(_repository.GetAll());
         public TModel GetId(Guid Id) => _mapping.ToModel( _repository.GetId(Id));
         public void SaveChanges() => _repository.Save();

@@ -4,9 +4,9 @@ using App.DAL.DB;
 using Microsoft.EntityFrameworkCore;
 
 using App.BLL;
+using App.BLL.Mapping;
 using App.Models.Entities;
 using App.Models.Models;
-using App.BLL.Mapping;
 
 
 
@@ -27,16 +27,16 @@ namespace App.PL
             builder.Services.AddScoped<ServiceRepository<Course , CourseModel>>();
             builder.Services.AddScoped<IMapping<Course, CourseModel>,CourseMapping>();
 
-            builder.Services.AddScoped<IRepository<App.Models.Entities.Group>, BaseRepository<App.Models.Entities.Group>>();
-            builder.Services.AddScoped<ServiceRepository<App.Models.Entities.Group, GroupModel>>();
-            builder.Services.AddScoped<IMapping<App.Models.Entities.Group, GroupModel>, GroupMapping>();
+            builder.Services.AddScoped<IRepository<Models.Entities.Group>, BaseRepository<Models.Entities.Group>>();
+            builder.Services.AddScoped<ServiceRepository<Models.Entities.Group, GroupModel>>();
+            builder.Services.AddScoped<IMapping<Models.Entities.Group, GroupModel>, GroupMapping>();
 
             builder.Services.AddScoped<IRepository<Teacher>, BaseRepository<Teacher>>();
             builder.Services.AddScoped<ServiceRepository<Teacher, TeacherModel>>();
             builder.Services.AddScoped<IMapping<Teacher, TeacherModel>, TeacherMapping>();
 
             builder.Services.AddScoped<IRepository<Student>, BaseRepository<Student>>();
-            builder.Services.AddScoped<ServiceRepository<Student, TeacherModel>>();
+            builder.Services.AddScoped<ServiceRepository<Student, StudentModel>>();
             builder.Services.AddScoped<IMapping<Student, StudentModel>, StudentMapping>();
 
 

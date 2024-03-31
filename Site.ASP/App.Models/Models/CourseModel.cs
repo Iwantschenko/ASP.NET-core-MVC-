@@ -1,5 +1,4 @@
-﻿using App.Models.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace App.Models.Models
 {
@@ -13,7 +12,7 @@ namespace App.Models.Models
         [Required(ErrorMessage = "Select Info")]
         public string Course_Description { get; set; }
 
-        public List<Group>? Groups { get; set; }
+
 
     }
 }

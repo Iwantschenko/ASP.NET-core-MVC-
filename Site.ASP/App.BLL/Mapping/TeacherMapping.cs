@@ -10,6 +10,7 @@ namespace App.BLL.Mapping
 {
     public class TeacherMapping : IMapping<Teacher, TeacherModel>
     {
+        
         public override Teacher ToEntity(TeacherModel model)
         {
             return new Teacher()
@@ -28,6 +29,13 @@ namespace App.BLL.Mapping
                 Teacher_Surname = entity.Teacher_Surname,
                 Teacher_Name = entity.Teacher_Name,
             };
+        }
+        public override Guid GetModelId(TeacherModel model) => model.Teacher_Id;
+
+        public override void UpdateEntity(TeacherModel model, Teacher entity)
+        {
+            entity.Teacher_Name = model.Teacher_Name;
+            entity.Teacher_Surname = model.Teacher_Surname;
         }
     }
 }

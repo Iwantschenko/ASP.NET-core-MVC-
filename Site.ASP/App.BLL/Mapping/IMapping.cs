@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace App.BLL.Mapping
         where TEntity : class
         where TModel : class
     {
+        
         public abstract TEntity ToEntity(TModel model);
         public abstract TModel ToModel(TEntity entity);
         public List<TModel> ToListModel(List<TEntity> list)
@@ -30,5 +32,7 @@ namespace App.BLL.Mapping
             }
             return entityList;
         }
+        public abstract Guid GetModelId(TModel model);
+        public abstract void UpdateEntity(TModel model, TEntity entity);
     }
 }

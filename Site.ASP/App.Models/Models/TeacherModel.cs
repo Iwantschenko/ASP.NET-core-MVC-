@@ -11,7 +11,7 @@ namespace App.Models.Models
         [Required(ErrorMessage = "Select surname")]
         public string Teacher_Surname { get; set; }
 
-        public List<GroupModel>? Groups { get; set; }
+
 
 
     }

@@ -10,6 +10,7 @@ namespace App.BLL.Mapping
 {
     public class StudentMapping : IMapping<Student, StudentModel>
     {
+
         public override Student ToEntity(StudentModel model)
         {
             return new Student()
@@ -30,6 +31,14 @@ namespace App.BLL.Mapping
                 First_Name = entity.First_Name,
                 Last_Name = entity.Last_Name,
             };
+        }
+
+        public override Guid GetModelId(StudentModel model) => model.GroupId;
+        public override void UpdateEntity(StudentModel model, Student entity)
+        {
+            entity.First_Name = model.First_Name;
+            entity.Last_Name = model.Last_Name;
+            entity.GroupId = model.GroupId;
         }
     }
 }

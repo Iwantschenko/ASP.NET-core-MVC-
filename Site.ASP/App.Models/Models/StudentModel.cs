@@ -11,7 +11,7 @@ namespace App.Models.Models
 
         public string Last_Name { get; set; }
         public Guid GroupId { get; set; }
-        public GroupModel? GroupStudent { get; set; }
+
 
     }
 }
