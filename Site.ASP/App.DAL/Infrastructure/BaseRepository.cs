@@ -36,18 +36,7 @@ namespace App.DAL.Infrastructure
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public List<T> GetAll()
-        {
-            var list = _context.Set<T>().ToList();
-            if (list != null)
-            {
-                return list;
-            }
-            else
-            {
-                return new List<T>();
-            }
-        }
+        public List<T> GetAll()=> _context.Set<T>().ToList();
 
         public T GetId(Guid id) => _context.Set<T>().Find(id);
        

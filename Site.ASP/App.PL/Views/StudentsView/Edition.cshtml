@@ -1,0 +1,35 @@
+﻿@model StudentsViewModel
+@{
+    ViewBag.Title = "Edition Students";
+}
+
+@using (Html.BeginForm("ResultEdition", "StudentsView", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.studentModel.Student_Id);
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.studentModel.First_Name)
+        @Html.TextBoxFor(model => model.studentModel.First_Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.studentModel.First_Name, "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.studentModel.Last_Name)
+        @Html.TextBoxFor(model => model.studentModel.Last_Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.studentModel.Last_Name, "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.studentModel.GroupId, "Select Teacher ")
+        @Html.DropDownListFor(Model => Model.studentModel.GroupId, Model.Groups, "----- Select Teacher -----", new { @class = "form-control" })
+        @Html.ValidationMessageFor(Model => Model.studentModel.GroupId, "", new { @class = "text-danger" })
+    </div>
+
+
+    @Html.HiddenFor(model => model.Groups)
+
+    <input type="submit" class="btn btn-primary" />
+}
+

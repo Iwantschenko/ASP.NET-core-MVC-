@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CourseModel>;
+@{
+    ViewBag.Title = "Courses data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1 style="text-align:center">Courses data</h1>
+<button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Create","CourseView",new {id = Guid.NewGuid()})'"> Create new </button>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int iterator = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@iterator</td>
+                        <td>@item.Course_Name</td>
+                        <td>@item.Course_Description</td>
+                        <td style="text-align: right; padding-right: 10%;">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Course_ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Course_ID},new { onclick = "return confirm('Are you sure?');" }) |
+                            @Html.ActionLink("Groups", "CourseDetails", "GroupView", new { idFindCourse = item.Course_ID })
+                        </td>
+                    </tr>
+                    iterator++;
+                }
+            }
+        </tbody>
+
+    </table>
+</div>
+

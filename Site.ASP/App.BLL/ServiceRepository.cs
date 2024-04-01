@@ -21,18 +21,72 @@ namespace App.BLL
             _mapping = mapping;
         }
 
-        public void Add(TModel model) => _repository.Add(_mapping.ToEntity(model));
-        public void AddRange(List<TModel> collection) => _repository.AddRange(_mapping.ToListEntity(collection));
-        public void Delete(TModel model) => _repository.Delete(_mapping.ToEntity(model));
-        public void RemoveEntity(TModel model) => _repository.RemoveEntity(_mapping.ToEntity(model));
+        public void Add(TModel model) 
+        {
+            if (model != null)
+            {
+                _repository.Add(_mapping.ToEntity(model));
+            }
+            else
+                return;
+        }
+
+        public void AddRange(List<TModel> collection) 
+        {
+            if (collection == null || !collection.Any())
+            {
+                throw new ArgumentNullException(nameof(collection), "Collection cannot be null or empty.");
+            }
+
+            _repository.AddRange(_mapping.ToListEntity(collection));
+        }
+        public void Delete(TModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model), "Model cannot be null.");
+            }
+            _repository.Delete(_mapping.ToEntity(model)); 
+        } 
+        public void RemoveEntity(TModel model)
+        {
+            if (model == null)
+            {
+                return;
+            }
+            var entity = _repository.GetId(_mapping.GetModelId(model));
+            _repository.RemoveEntity(entity);
+        }
         public void Update(TModel model)
         {
+            if (model == null)
+                return;
             var entity = _repository.GetId(_mapping.GetModelId(model));
             _mapping.UpdateEntity(model ,entity);
-             _repository.Update(entity);
-        }  
-        public List<TModel> GetAll() => _mapping.ToListModel(_repository.GetAll());
-        public TModel GetId(Guid Id) => _mapping.ToModel( _repository.GetId(Id));
+            _repository.Update(entity);
+            
+        }
+        public List<TModel> GetAll() 
+        {
+            var list = _repository.GetAll();
+            if (list == null)
+            {
+                return new List<TModel>();
+            }
+            else
+                return _mapping.ToListModel(list);
+        } 
+        public TModel GetId(Guid Id) 
+        {
+            var entity = _repository.GetId(Id);
+            if (entity != null)
+            {
+                return _mapping.ToModel(entity);
+            }
+            else
+                return null;
+             
+        }
         public void SaveChanges() => _repository.Save();
     }
 

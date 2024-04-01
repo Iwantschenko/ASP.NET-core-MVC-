@@ -1,0 +1,21 @@
+﻿@model CourseModel
+
+
+@using (Html.BeginForm("ResultEdition", "CourseView", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Course_ID)
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Course_Name)
+        @Html.TextBoxFor(model => model.Course_Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Course_Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Course_Description)
+        @Html.TextBoxFor(model => model.Course_Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Course_Description, "", new { @class = "text-danger" })
+    </div>
+
+    <input type="submit" class="btn btn-primary" />
+}

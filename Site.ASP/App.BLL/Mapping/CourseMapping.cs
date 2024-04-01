@@ -22,12 +22,12 @@ namespace App.BLL.Mapping
         }
         public override CourseModel ToModel(Course entity)
         {
-            return new CourseModel()
-            {
-                Course_ID = entity.Course_ID,
-                Course_Name = entity.Course_Name,
-                Course_Description = entity.Course_Description,
-            };
+                return new CourseModel()
+                {
+                    Course_ID = entity.Course_ID,
+                    Course_Name = entity.Course_Name,
+                    Course_Description = entity.Course_Description,
+                };   
         }
         public override Guid GetModelId(CourseModel model) => model.Course_ID;
 

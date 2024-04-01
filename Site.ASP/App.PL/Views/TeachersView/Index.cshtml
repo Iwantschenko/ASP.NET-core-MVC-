@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TeacherModel>;
+@{
+    ViewBag.Title = "Teacher data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="text-align:center">Teacher data </h1>
+<button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Create","TeachersView" , new {id = Guid.NewGuid()})'"> Create new </button>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int iterator = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@iterator</td>
+                        <td>@item.Teacher_Name</td>
+                        <td>@item.Teacher_Surname</td>
+                        <td style="text-align: right; padding-right: 10%;">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Teacher_Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Teacher_Id }, new { onclick = "return confirm('Are you sure?');" })
+                        </td>
+                    </tr>
+                    iterator++;
+                }
+            }
+        </tbody>
+
+    </table>
+</div>
+

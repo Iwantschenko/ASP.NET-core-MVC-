@@ -16,12 +16,12 @@ namespace App.BLL.Mapping
         public abstract TModel ToModel(TEntity entity);
         public List<TModel> ToListModel(List<TEntity> list)
         {
-            List<TModel> modelList = new List<TModel>();
-            foreach (var item in list)
-            {
-                modelList.Add(ToModel(item));
-            }
-            return modelList;
+                List<TModel> modelList = new List<TModel>();
+                foreach (var item in list)
+                {
+                    modelList.Add(ToModel(item));
+                }
+                return modelList;   
         }
         public List<TEntity> ToListEntity(List<TModel> list)
         {

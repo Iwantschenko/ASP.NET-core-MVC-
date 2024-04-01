@@ -33,7 +33,7 @@ namespace App.BLL.Mapping
             };
         }
 
-        public override Guid GetModelId(StudentModel model) => model.GroupId;
+        public override Guid GetModelId(StudentModel model) => model.Student_Id;
         public override void UpdateEntity(StudentModel model, Student entity)
         {
             entity.First_Name = model.First_Name;

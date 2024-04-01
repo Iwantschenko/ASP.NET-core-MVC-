@@ -1,0 +1,24 @@
+﻿@model TeacherModel
+
+@using (Html.BeginForm("ResultEdition", "TeachersView", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.HiddenFor(model => model.Teacher_Id);
+
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Teacher_Name)
+        @Html.TextBoxFor(model => model.Teacher_Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Teacher_Name)
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Teacher_Surname)
+        @Html.TextBoxFor(model => model.Teacher_Surname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Teacher_Surname)
+    </div>
+
+    <input type="submit" class="btn btn-primary" />
+}
+
