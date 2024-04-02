@@ -59,14 +59,15 @@ namespace App.PL.Controllers
         public IActionResult Edit(Guid id)
         {
             var student = _studentService.GetId(id);
-            return RedirectToAction("Edition", student);
+            if (student == null) 
+            {
+                return RedirectToAction("Edition",new StudentModel() { Student_Id = id});
+            }
+            else 
+                return RedirectToAction("Edition", student);
         }
 
-        public IActionResult Create(Guid id)
-        {
-
-            return RedirectToAction("Edition", new StudentModel { Student_Id = id });
-        }
+        
         public IActionResult Edition(StudentModel student)
         {
             return View(GetStudentViewModel(student));
@@ -93,7 +94,7 @@ namespace App.PL.Controllers
         }
         public IActionResult Delete(Guid id)
         {
-            _studentService.RemoveEntity(_studentService.GetId(id));
+            _studentService.RemoveEntity(id);
             _studentService.SaveChanges();
             return RedirectToAction("Index");
         }

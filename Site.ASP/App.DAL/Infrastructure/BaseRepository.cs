@@ -19,9 +19,9 @@ namespace App.DAL.Infrastructure
         {
             _context.Set<T>().AddRange(entity);
         }
-        public void Delete(T entity)
+        public void Delete(Guid id)
         {
-            var item = _context.Set<T>().Find(entity);
+            var item = GetId(id);
             if (item != null)
             {
                 _context.Set<T>().Remove(item);

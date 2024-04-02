@@ -1,5 +1,10 @@
 ﻿@model CourseModel
-
+@{
+    if (Model == null)
+    {
+        Model.Course_ID = Guid.NewGuid();
+    }
+}
 
 @using (Html.BeginForm("ResultEdition", "CourseView", FormMethod.Post))
 {

@@ -5,7 +5,7 @@
         void Add(T entity);
         void AddRange(IEnumerable<T> entity);
         void Update(T entity);
-        void Delete(T entity);
+        void Delete(Guid id);
         void RemoveEntity(T entity);
         T GetId(Guid id);
         

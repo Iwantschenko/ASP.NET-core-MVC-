@@ -17,23 +17,19 @@ namespace App.PL.Controllers
             var teachers = _teacherService.GetAll().ToList();
             return View(teachers);
         }
-        [HttpGet]
-        public IActionResult Create(Guid id)
-        {
-            var teacher = new TeacherModel()
-            {
-                Teacher_Id = id,
-                Teacher_Name = string.Empty,
-                Teacher_Surname = string.Empty,
-            };
-            return View("Edit", teacher);
-        }
+        
+        
 
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
             var teacher = _teacherService.GetId(id);
-            return View(teacher);
+            if (teacher == null)
+            {
+                return View(new TeacherModel() { Teacher_Id = id });
+            }
+            else
+                return View(teacher);
         }
 
         [HttpPost]
@@ -55,14 +51,14 @@ namespace App.PL.Controllers
             }
             else
             {
-                return View();
+                return View("Edit",teacher);
             }
 
         }
 
         public IActionResult Delete(Guid id)
         {
-            _teacherService.RemoveEntity(_teacherService.GetId(id));
+            _teacherService.RemoveEntity(id);
             _teacherService.SaveChanges();
             return RedirectToAction("Index");
         }

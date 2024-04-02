@@ -24,20 +24,15 @@ namespace App.PL.Controllers
         public IActionResult Edit(Guid id)
         {
             var find = _courseService.GetId(id);
-
-            return View(find);
-        }
-        [HttpGet]
-        public IActionResult Create(Guid id)
-        {
-            CourseModel course = new CourseModel()
+            if(find == null)
             {
-                Course_ID = id,
-                Course_Name = string.Empty,
-                Course_Description = string.Empty,
-            };
-            return View("Edit", course);
+                return View(new CourseModel() {Course_ID = id});
+            }
+            else 
+                return View(find);
         }
+        
+        
         [HttpPost]
         public IActionResult ResultEdition(CourseModel course)
         {
@@ -66,7 +61,7 @@ namespace App.PL.Controllers
 
         public IActionResult Delete(Guid id)
         {
-            _courseService.RemoveEntity(_courseService.GetId(id));
+            _courseService.RemoveEntity(id);
             _courseService.SaveChanges();
             return RedirectToAction("Index");
         }

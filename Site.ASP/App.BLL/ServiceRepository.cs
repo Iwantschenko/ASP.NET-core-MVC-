@@ -46,16 +46,11 @@ namespace App.BLL
             {
                 throw new ArgumentNullException(nameof(model), "Model cannot be null.");
             }
-            _repository.Delete(_mapping.ToEntity(model)); 
+            _repository.RemoveEntity(_mapping.ToEntity(model)); 
         } 
-        public void RemoveEntity(TModel model)
+        public void RemoveEntity(Guid Id)
         {
-            if (model == null)
-            {
-                return;
-            }
-            var entity = _repository.GetId(_mapping.GetModelId(model));
-            _repository.RemoveEntity(entity);
+            _repository.Delete(Id);
         }
         public void Update(TModel model)
         {

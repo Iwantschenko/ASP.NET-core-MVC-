@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.BLL;
 using App.PL.ViewModel;
+using Microsoft.IdentityModel.Tokens;
 namespace App.PL.Controllers
 {
     public class GroupViewController : Controller
@@ -11,14 +12,17 @@ namespace App.PL.Controllers
         private readonly ServiceRepository<App.Models.Entities.Group , GroupModel> _groupService;
         private readonly ServiceRepository<Course , CourseModel> _courseService;
         private readonly ServiceRepository<Teacher, TeacherModel> _teacherService;
+        private readonly ServiceRepository<Student, StudentModel> _studentService;
         public GroupViewController(
             ServiceRepository<App.Models.Entities.Group ,GroupModel> groupService,
             ServiceRepository<Course, CourseModel> courseService,
-            ServiceRepository<Teacher, TeacherModel> teacherService)
+            ServiceRepository<Teacher, TeacherModel> teacherService,
+            ServiceRepository<Student ,StudentModel> studentService)
         {
             _groupService = groupService;
             _courseService = courseService;
             _teacherService = teacherService;
+            _studentService = studentService;
         }
 
         private GroupViewModel GetGroupViewModel(GroupModel group)
@@ -79,13 +83,10 @@ namespace App.PL.Controllers
                 return RedirectToAction("Edition", item);
             }
             else
-                return RedirectToAction("Index");
+                return RedirectToAction("Edition", new GroupModel() { Group_Id = id});
 
         }
-        public IActionResult Create()
-        {
-            return RedirectToAction("Edition", new GroupModel() { Group_Id = Guid.NewGuid() });
-        }
+        
         public IActionResult Edition(GroupModel group)
         {
             return View(GetGroupViewModel(group));
@@ -116,9 +117,18 @@ namespace App.PL.Controllers
 
         public IActionResult Delete(Guid id)
         {
-            _groupService.RemoveEntity(_groupService.GetId(id));
-            _groupService.SaveChanges();
-            return RedirectToAction("Index");
+            var students = _studentService.GetAll().Where(x => x.GroupId == id);
+            if (students.IsNullOrEmpty())
+            {
+                _groupService.RemoveEntity(id);
+                _groupService.SaveChanges();
+
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "There are students in this Group. Do not delete";
+            }
+            return RedirectToAction("Index");            
         }
 
     }

@@ -4,8 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <h1>Group data</h1>
-<button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Create","GroupView", new {id= Guid.NewGuid()})'"> Create new </button>
+<button class="btn btn-primary" style="margin-left:80%" onclick="window.location.href= '@Url.Action("Edit","GroupView", new {id= Guid.NewGuid()})'"> Create new </button>
 <div>
     <table class="table table-striped">
         <thead>
