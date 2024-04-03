@@ -1,5 +1,7 @@
-﻿using App.Models.Entities;
+﻿using App.Models;
+using App.Models.Entities;
 using App.Models.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +38,16 @@ namespace App.BLL.Mapping
         {
             entity.Teacher_Name = model.Teacher_Name;
             entity.Teacher_Surname = model.Teacher_Surname;
+        }
+
+        public override List<ShortModel> GetShortData(List<Teacher> list)
+        {
+            return list.Select(x => new ShortModel() {ID= x.Teacher_Id , Info_Model =x.Teacher_Surname +" "+ x.Teacher_Name }).ToList();
+        }
+
+        public override List<Teacher> GetSuccessorsForId(List<Teacher> list, Guid Id)
+        {
+            return new List<Teacher>();
         }
     }
 }

@@ -12,7 +12,10 @@ namespace App.Models.Models
         [Required(ErrorMessage = "Select Info")]
         public string Course_Description { get; set; }
 
-
+        public override string ToString()
+        {
+            return Course_Name;
+        }
 
     }
 }

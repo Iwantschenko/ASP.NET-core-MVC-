@@ -11,7 +11,10 @@ namespace App.Models.Models
         [Required(ErrorMessage = "Select surname")]
         public string Teacher_Surname { get; set; }
 
-
+        public override string ToString()
+        {
+            return Teacher_Name + " " + Teacher_Surname;
+        }
 
 
     }

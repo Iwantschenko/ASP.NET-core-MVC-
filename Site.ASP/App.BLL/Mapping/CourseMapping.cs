@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Models;
 using App.Models.Entities;
 using App.Models.Models;
+
 
 namespace App.BLL.Mapping
 {
@@ -35,6 +37,16 @@ namespace App.BLL.Mapping
         {
             entity.Course_Name = model.Course_Name;
             entity.Course_Description = model.Course_Description;
+        }
+
+        public override List<ShortModel> GetShortData(List<Course> list)
+        {
+            return  list.Select(x => new ShortModel { ID = x.Course_ID , Info_Model = x.Course_Name}).ToList();
+        }
+
+        public override List<Course> GetSuccessorsForId(List<Course> list, Guid Id)
+        {
+            return new List<Course>();
         }
     }
 }

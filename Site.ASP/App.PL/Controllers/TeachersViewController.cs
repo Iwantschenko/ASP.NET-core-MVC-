@@ -17,19 +17,23 @@ namespace App.PL.Controllers
             var teachers = _teacherService.GetAll().ToList();
             return View(teachers);
         }
-        
-        
 
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            var teacher = _teacherService.GetId(id);
-            if (teacher == null)
+            if (_teacherService.IsNotNull(id))
             {
-                return View(new TeacherModel() { Teacher_Id = id });
+                return View(_teacherService.GetId(id));
             }
             else
-                return View(teacher);
+                return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Create(Guid id)
+        {
+
+            return View("Edit", new TeacherModel() { Teacher_Id = id});
         }
 
         [HttpPost]
@@ -38,13 +42,12 @@ namespace App.PL.Controllers
             if (ModelState.IsValid)
             {
                 
-                if (_teacherService.GetId(teacher.Teacher_Id) != null)
+                if (_teacherService.IsNotNull(teacher.Teacher_Id))
                 {
                     _teacherService.Update(teacher);
                 }
                 else
                     _teacherService.Add(teacher);
-
 
                 _teacherService.SaveChanges();
                 return RedirectToAction("Index");

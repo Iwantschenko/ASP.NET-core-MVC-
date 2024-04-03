@@ -24,27 +24,27 @@ namespace App.PL.Controllers
         public IActionResult Edit(Guid id)
         {
             var find = _courseService.GetId(id);
-            if(find == null)
-            {
-                return View(new CourseModel() {Course_ID = id});
-            }
-            else 
-                return View(find);
+            return View(find);
         }
-        
-        
+        [HttpGet]
+        public IActionResult Create(Guid id)
+        {
+            return View("Edit", new CourseModel() { Course_ID = id}); 
+        }
+
         [HttpPost]
         public IActionResult ResultEdition(CourseModel course)
         {
             if (ModelState.IsValid)
             {
-                if (_courseService.GetId(course.Course_ID) != null)
+                if (_courseService.IsNotNull(course.Course_ID))
                 {
                     _courseService.Update(course);
                 }
                 else
                 {
                     _courseService.Add(course);
+                    
                 }
 
                 _courseService.SaveChanges();

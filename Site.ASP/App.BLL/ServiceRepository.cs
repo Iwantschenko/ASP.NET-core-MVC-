@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Models;
+
 
 namespace App.BLL
 {
@@ -81,6 +83,38 @@ namespace App.BLL
             else
                 return null;
              
+        }
+        public bool IsNotNull(Guid id)
+        {
+            var entity = _repository.GetId(id);
+            if (entity != null)
+            {
+                return true;
+            }
+            else 
+                return false;
+        }
+        public List<TModel> GetLinkedDataListForId(Guid id)
+        {
+            var list = _mapping.GetSuccessorsForId(_repository.GetAll() ,id);
+            if (list != null)
+            {
+                return _mapping.ToListModel(list);
+            }
+            else 
+                return new List<TModel>();
+        }
+        public List<ShortModel> GetShortsData()
+        {
+            var shortDataList = _mapping.GetShortData(_repository.GetAll());
+            if (shortDataList != null)
+            {
+                return shortDataList;
+            }
+            else
+            {
+                return new List<ShortModel>(); 
+            }
         }
         public void SaveChanges() => _repository.Save();
     }

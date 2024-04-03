@@ -19,22 +19,10 @@ namespace App.PL.Controllers
         }
         private StudentsViewModel GetStudentViewModel(StudentModel student)
         {
-            var selectListGroups = new List<SelectListItem>();
-            var studentModel = new StudentModel()
-            {
-                Student_Id = student.Student_Id,
-                First_Name = student.First_Name,
-                Last_Name = student.Last_Name,
-                GroupId = student.GroupId,
-            };
-            foreach (var group in _groupService.GetAll())
-            {
-                selectListGroups.Add(new SelectListItem() { Text = group.Group_Name, Value = group.Group_Id.ToString() });
-            }
             return new StudentsViewModel
             {
                 studentModel = student,
-                Groups = selectListGroups
+                Groups = new SelectList(_groupService.GetShortsData(), "ID", "Info_Model")
             };
         }
         public IActionResult Index()
@@ -51,7 +39,7 @@ namespace App.PL.Controllers
         {
             var allStudentInfo = new StudentListViewModel()
             {
-                Students = _studentService.GetAll().Where(x => x.GroupId == findGroupID).ToList(),
+                Students = _studentService.GetLinkedDataListForId(findGroupID),
                 Groups = _groupService.GetAll()
             };
             return View("Index", allStudentInfo);
@@ -59,15 +47,13 @@ namespace App.PL.Controllers
         public IActionResult Edit(Guid id)
         {
             var student = _studentService.GetId(id);
-            if (student == null) 
-            {
-                return RedirectToAction("Edition",new StudentModel() { Student_Id = id});
-            }
-            else 
-                return RedirectToAction("Edition", student);
+            return RedirectToAction("Edition", student);
+        }
+        public IActionResult Create(Guid id)
+        {
+            return RedirectToAction("Edition", new StudentModel { Student_Id = id });
         }
 
-        
         public IActionResult Edition(StudentModel student)
         {
             return View(GetStudentViewModel(student));
@@ -76,7 +62,7 @@ namespace App.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_studentService.GetId(model.studentModel.Student_Id) != null)
+                if (_studentService.IsNotNull(model.studentModel.Student_Id))
                 {
                     _studentService.Update(model.studentModel);
                 }

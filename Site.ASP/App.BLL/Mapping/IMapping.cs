@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -34,5 +35,7 @@ namespace App.BLL.Mapping
         }
         public abstract Guid GetModelId(TModel model);
         public abstract void UpdateEntity(TModel model, TEntity entity);
+        public abstract List<ShortModel> GetShortData(List<TEntity> list);
+        public abstract List<TEntity> GetSuccessorsForId(List<TEntity> list ,Guid Id);
     }
 }

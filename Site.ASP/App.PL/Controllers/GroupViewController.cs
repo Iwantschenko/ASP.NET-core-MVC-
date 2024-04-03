@@ -27,31 +27,15 @@ namespace App.PL.Controllers
 
         private GroupViewModel GetGroupViewModel(GroupModel group)
         {
-            var courseSelectList = new List<SelectListItem>();
-            var teacherSelectList = new List<SelectListItem>();
-            var groupModel= new GroupModel()
-            {
-                Group_Id = group.Group_Id,
-                Group_Name = group.Group_Name,
-                CourseId = group.CourseId,
-                TeacherId = group.TeacherId,
-            };
-            foreach (var course in _courseService.GetAll())
-            {
-                courseSelectList.Add(new SelectListItem() { Text = course.Course_Name, Value = course.Course_ID.ToString() });
-            }
-            foreach (var teacher in _teacherService.GetAll())
-            {
-                teacherSelectList.Add(new SelectListItem() { Text = teacher.Teacher_Name + " " + teacher.Teacher_Surname, Value = teacher.Teacher_Id.ToString() });
-            }
-
+         
             return new GroupViewModel()
             {
-                groupModel = groupModel,
-                courseSelectList = courseSelectList,
-                teacherSelectList = teacherSelectList
+                groupModel = group,
+                courseSelectList = new SelectList(_courseService.GetShortsData(),"ID", "Info_Model"),
+                teacherSelectList = new SelectList(_teacherService.GetShortsData(), "ID", "Info_Model")
             };
         }
+
 
         public IActionResult Index()
         {
@@ -68,7 +52,7 @@ namespace App.PL.Controllers
         {
             var groupsViewModel = new GroupListViewModel()
             {
-                Groups = _groupService.GetAll().Where(x => x.CourseId == idFindCourse).ToList(),
+                Groups = _groupService.GetLinkedDataListForId(idFindCourse),
                 Courses = _courseService.GetAll(),
                 Teachers = _teacherService.GetAll(),
             };
@@ -83,16 +67,20 @@ namespace App.PL.Controllers
                 return RedirectToAction("Edition", item);
             }
             else
-                return RedirectToAction("Edition", new GroupModel() { Group_Id = id});
+                return RedirectToAction("Index");
 
         }
-        
+        public IActionResult Create(Guid id)
+        {
+            return RedirectToAction("Edition", new GroupModel() { Group_Id = id});
+        }
         public IActionResult Edition(GroupModel group)
         {
             return View(GetGroupViewModel(group));
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ResultEdition(GroupViewModel model)
         {
 
@@ -117,12 +105,11 @@ namespace App.PL.Controllers
 
         public IActionResult Delete(Guid id)
         {
-            var students = _studentService.GetAll().Where(x => x.GroupId == id);
+            var students = _studentService.GetLinkedDataListForId(id);
             if (students.IsNullOrEmpty())
             {
                 _groupService.RemoveEntity(id);
                 _groupService.SaveChanges();
-
             }
             else
             {

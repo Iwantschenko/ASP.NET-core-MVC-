@@ -15,18 +15,19 @@
     <br />
     <div class="form-group">
         @Html.LabelFor(model => model.groupModel.CourseId ,"Select Course")
-        @Html.DropDownListFor(Model => Model.groupModel.CourseId, Model.courseSelectList, "----- Select Course -----", new { @class = "form-control" })
+        @Html.DropDownListFor(Model => Model.groupModel.CourseId, Model.courseSelectList as SelectList, "----- Select Course -----", new { @class = "form-control" })
         @Html.ValidationMessageFor(Model => Model.groupModel.CourseId,"", new { @class = "text-danger" })
     </div>
     <br />
     <div class="form-group">
         @Html.LabelFor(model => model.groupModel.TeacherId, "Select Teacher ")
-        @Html.DropDownListFor(Model => Model.groupModel.TeacherId, Model.teacherSelectList, "----- Select Teacher -----", new { @class = "form-control" })
+        @Html.DropDownListFor(Model => Model.groupModel.TeacherId, Model.teacherSelectList as SelectList, "----- Select Teacher -----", new { @class = "form-control" })
         @Html.ValidationMessageFor(Model => Model.groupModel.TeacherId, "", new { @class = "text-danger" })
     </div>
 
 
     @Html.HiddenFor(model => model.courseSelectList)
     @Html.HiddenFor(model => model.teacherSelectList)
+    
     <input type="submit"  class="btn btn-primary" />
 }
