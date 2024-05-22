@@ -1,8 +1,7 @@
-﻿
-using App.DAL.DB;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Site.DAL.DB;
 
-namespace App.DAL.Infrastructure
+namespace Site.DAL.Infrastructure
 {
     public class BaseRepository<T> : IRepository<T> where T : class
     {
@@ -36,16 +35,16 @@ namespace App.DAL.Infrastructure
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public List<T> GetAll()=> _context.Set<T>().ToList();
+        public List<T> GetAll() => _context.Set<T>().ToList();
 
         public T GetId(Guid id) => _context.Set<T>().Find(id);
-       
+
 
         public void Save()
         {
             _context.SaveChanges();
         }
 
-        
+
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace App.DAL.DB
+namespace Site.DAL.DB
 {
     public class DataBaseContext : DbContext
     {

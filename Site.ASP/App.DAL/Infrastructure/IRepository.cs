@@ -1,4 +1,4 @@
-﻿namespace App.DAL.Infrastructure
+﻿namespace Site.DAL.Infrastructure
 {
     public interface IRepository<T>
     {
@@ -8,7 +8,7 @@
         void Delete(Guid id);
         void RemoveEntity(T entity);
         T GetId(Guid id);
-        
+
         void Save();
         List<T> GetAll();
 
